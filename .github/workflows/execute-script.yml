@@ -1,0 +1,18 @@
+name: Execute a script
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: print comment
+        run: |
+            chmod +x hello.sh
+            ./hello.sh
+
+      

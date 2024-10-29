@@ -1,0 +1,14 @@
+name: GitHub Actions Demo
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: welcome
+        run: echo "Welcome you!"
+      - name: list files
+        run: ls
+      - name: read file
+        run: cat README.md
+      

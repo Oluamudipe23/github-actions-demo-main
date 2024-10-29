@@ -1,0 +1,37 @@
+name: Execute a script
+on: push
+jobs:
+  build_job_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print comment
+        run: echo "I am job 1"
+  deploy_job_2:
+    needs: build_job_1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: print comment
+        run: |
+          chmod +x hello.sh
+          sh ./hello.sh
+      - name: upload file
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: hello.txt
+  test_job_3:
+    needs: [build_job_1, deploy_job_2]
+    runs-on: ubuntu-latest
+    steps:
+      # - uses: actions/checkout@v4
+      - name: download file
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+      - name: read file
+        run: |
+          cat hello.txt
+          echo "I am job 3"
+
+      
